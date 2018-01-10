@@ -20,5 +20,9 @@ export const citiesFilter = state => {
       tipsList.push(city);
     }
   }
-  return tipsList;
+
+  return {
+    cities: tipsList.slice(0, 5),
+    citiesAmount: tipsList.length
+  };
 };

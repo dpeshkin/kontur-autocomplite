@@ -15,15 +15,15 @@ export class Main extends Component {
     return (
       <section className="main">
         <form name="searchForm" action="#" className="form">
-          <label htmlFor="searchInput" className="form__label">
+          <label htmlFor="cityInput" className="form__label">
             Город
           </label>
           <input
             type="text"
-            name="searchInput"
-            id="searchInput"
-            className="form_input"
-            placeholder="Начните вводить код или название"
+            name="cityInput"
+            id="cityInput"
+            className="form__input"
+            placeholder="Начните вводить название"
             onChange={this.handleChange}
           />
           <InputTips tips={tips} />

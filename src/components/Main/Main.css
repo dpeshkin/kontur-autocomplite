@@ -2,3 +2,46 @@
   display: block;
   margin-bottom: 5px;
 }
+
+.form__input {
+  font-family: inherit;
+  line-height: inherit;
+  color: inherit;
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  border-top-color: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0px 0px 1px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  padding: 5px;
+  outline: none;
+}
+
+.form__input:focus {
+  border-color: #5199db;
+  border-width: 2px;
+  padding: 4px;
+}
+
+.form__input_error {
+  border-color: #da0c09;
+  border-width: 2px;
+  padding: 4px;
+}
+
+.form__input::-webkit-input-placeholder {
+  color: #bcbcbc;
+}
+.form__input::-moz-placeholder {
+  color: #bcbcbc;
+}
+.form__input:-ms-input-placeholder {
+  color: #bcbcbc;
+}
+.form__input:focus::-webkit-input-placeholder {
+  color: #dcdcdc;
+}
+.form__input:focus::-moz-placeholder {
+  color: #dcdcdc;
+}
+.form__input:focus:-ms-input-placeholder {
+  color: #dcdcdc;
+}

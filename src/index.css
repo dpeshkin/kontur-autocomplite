@@ -1,6 +1,19 @@
-body {
-  font-family: Segoe UI, sans-serif;
+@font-face {
+  font-family: 'Segoe UI';
+  font-weight: 400;
+  src: local('Segoe UI'), local('SegoeUI'),
+    url('//i.s-microsoft.com/fonts/Segoe-UI/Cyrillic/Normal/latest.woff')
+      format('woff');
+}
+
+html {
+  font-family: 'Segoe UI', sans-serif;
   font-size: 14px;
   color: #404040;
   line-height: 20px;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
 }
