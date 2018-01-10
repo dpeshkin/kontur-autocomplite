@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import InputTips from '../InputTips';
+import { connect } from 'react-redux';
+import { cityRequest } from '../../actions/cityRequest';
+import { citiesFilter } from '../../reducers/query';
 import './Main.css';
 
 export class Main extends Component {
   handleChange = e => {
-    const value = e.target.value;
-    console.log(value);
+    const value = e.target.value.trim();
+    this.props.cityRequest(value);
   };
   render() {
+    let { tips } = this.props;
     return (
       <section className="main">
         <form name="searchForm" action="#" className="form">
@@ -22,11 +26,19 @@ export class Main extends Component {
             placeholder="Начните вводить код или название"
             onChange={this.handleChange}
           />
-          <InputTips tips={[1, 2, 3]} />
+          <InputTips tips={tips} />
         </form>
       </section>
     );
   }
 }
 
-export default Main;
+const mapStateToProps = state => ({
+  tips: citiesFilter(state)
+});
+
+const mapDispatchToProps = {
+  cityRequest
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -1,5 +1,6 @@
 import React from 'react';
 
+//генератор для айдишек элементов списка
 let id = 0;
 const generateId = () => {
   id += 1;
