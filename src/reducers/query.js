@@ -14,10 +14,10 @@ export const citiesFilter = state => {
   for (let city of cities) {
     if (
       query !== '' &&
-      city &&
-      city.toLowerCase().indexOf(query.toLowerCase()) === 0
+      city.City &&
+      city.City.toLowerCase().indexOf(query.toLowerCase()) === 0
     ) {
-      tipsList.push(city);
+      tipsList.push({ Id: city.Id, City: city.City });
     }
   }
 

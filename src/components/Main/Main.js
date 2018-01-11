@@ -33,9 +33,9 @@ export class Main extends Component {
     let valid = false;
     let selectedCity = '';
     for (let city of cities) {
-      if (query.trim().toLowerCase() === city.toLowerCase()) {
+      if (query.trim().toLowerCase() === city.City.toLowerCase()) {
         valid = true;
-        selectedCity = city;
+        selectedCity = city.City;
         break;
       }
     }
@@ -46,8 +46,8 @@ export class Main extends Component {
   };
 
   handleBlur = () => {
-    //Таймаут необходим, т.к. обработка потери фокуса на инпуте
-    //срабатывает раньше чем обработка клика на пункте из списка подсказок
+    // Таймаут необходим, т.к. обработка потери фокуса на инпуте
+    // срабатывает раньше чем обработка клика на пункте из списка подсказок
     setTimeout(() => {
       this.setState({ inputFocused: false });
       this.validate();
