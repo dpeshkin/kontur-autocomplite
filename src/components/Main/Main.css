@@ -45,3 +45,7 @@
 .form__input:focus:-ms-input-placeholder {
   color: #dcdcdc;
 }
+.validation-error {
+  color: #da0c09;
+  padding: 5px;
+}

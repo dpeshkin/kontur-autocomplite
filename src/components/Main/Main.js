@@ -6,15 +6,65 @@ import { citiesFilter } from '../../reducers/query';
 import './Main.css';
 
 export class Main extends Component {
+  state = {
+    query: '',
+    cities: [],
+    citiesAmount: 0,
+    inputFocused: false,
+    inputValid: true
+  };
+
+  componentWillReceiveProps(nextProps) {
+    const { cities, citiesAmount } = nextProps.tips;
+    this.setState({
+      cities: cities,
+      citiesAmount: citiesAmount
+    });
+  }
+
   handleChange = e => {
-    const value = e.target.value.trim();
-    this.props.cityRequest(value);
+    const value = e.target.value;
+    this.props.cityRequest(value.trim());
+    this.setState({ query: value });
   };
+
   validate = () => {
-    console.log('1!!');
+    const { query, cities } = this.state;
+    let valid = false;
+    let selectedCity = '';
+    for (let city of cities) {
+      if (query.trim().toLowerCase() === city.toLowerCase()) {
+        valid = true;
+        selectedCity = city;
+        break;
+      }
+    }
+    this.setState({
+      inputValid: valid,
+      query: selectedCity ? selectedCity : query
+    });
   };
+
+  handleBlur = () => {
+    //Таймаут необходим, т.к. обработка потери фокуса на инпуте
+    //срабатывает раньше чем обработка клика на пункте из списка подсказок
+    setTimeout(() => {
+      this.setState({ inputFocused: false });
+      this.validate();
+    }, 100);
+  };
+
+  handleFocus = () => {
+    this.setState({ inputFocused: true, inputValid: true });
+  };
+
+  handleClickOnTip = e => {
+    const value = e.target.getAttribute('data-value');
+    if (value) this.setState({ query: value });
+  };
+
   render() {
-    let { tips } = this.props;
+    let { query, inputFocused, inputValid } = this.state;
     return (
       <section className="main">
         <form name="searchForm" action="#" className="form">
@@ -22,15 +72,28 @@ export class Main extends Component {
             Город
           </label>
           <input
+            value={query}
             type="text"
             name="cityInput"
             id="cityInput"
-            className="form__input"
+            className={
+              inputValid ? 'form__input' : 'form__input form__input_error'
+            }
             placeholder="Начните вводить название"
             onChange={this.handleChange}
-            onBlur={this.validate}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
           />
-          {tips.query && <InputTips tips={tips} />}
+          {!inputValid && (
+            <div className="validation-error">Выберите значение из списка</div>
+          )}
+          {query &&
+            inputFocused && (
+              <InputTips
+                tips={this.state}
+                handleClick={this.handleClickOnTip}
+              />
+            )}
         </form>
       </section>
     );
