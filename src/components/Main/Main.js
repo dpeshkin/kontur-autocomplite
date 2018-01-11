@@ -10,6 +10,9 @@ export class Main extends Component {
     const value = e.target.value.trim();
     this.props.cityRequest(value);
   };
+  validate = () => {
+    console.log('1!!');
+  };
   render() {
     let { tips } = this.props;
     return (
@@ -25,8 +28,9 @@ export class Main extends Component {
             className="form__input"
             placeholder="Начните вводить название"
             onChange={this.handleChange}
+            onBlur={this.validate}
           />
-          <InputTips tips={tips} />
+          {tips.query && <InputTips tips={tips} />}
         </form>
       </section>
     );

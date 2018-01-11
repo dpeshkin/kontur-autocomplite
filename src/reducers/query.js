@@ -22,6 +22,7 @@ export const citiesFilter = state => {
   }
 
   return {
+    query: query,
     cities: tipsList.slice(0, 5),
     citiesAmount: tipsList.length
   };
