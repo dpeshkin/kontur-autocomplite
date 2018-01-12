@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { query } from './query';
-import { cities } from './cities';
+import { isFetching, networkError, query, cities } from './query';
 
-export default combineReducers({ query, cities });
+export default combineReducers({ isFetching, networkError, query, cities });

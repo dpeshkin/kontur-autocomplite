@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import InputTips from '../InputTips';
 import { connect } from 'react-redux';
-import { cityRequest } from '../../actions/cityRequest';
-import { citiesFilter } from '../../reducers/query';
+import { fetchCityRequest } from '../../actions/cityRequest';
+import { filteredCities } from '../../reducers/query';
 import './Main.css';
 
 export class Main extends Component {
@@ -15,7 +15,7 @@ export class Main extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { cities, citiesAmount } = nextProps.tips;
+    const { cities, citiesAmount } = nextProps;
     this.setState({
       cities: cities,
       citiesAmount: citiesAmount
@@ -24,7 +24,7 @@ export class Main extends Component {
 
   handleChange = e => {
     const value = e.target.value;
-    this.props.cityRequest(value.trim());
+    this.props.fetchCityRequest(value.trim());
     this.setState({ query: value });
   };
 
@@ -100,12 +100,10 @@ export class Main extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  tips: citiesFilter(state)
-});
+const mapStateToProps = state => filteredCities(state);
 
 const mapDispatchToProps = {
-  cityRequest
+  fetchCityRequest
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -1,28 +1,39 @@
-import { handleAction } from 'redux-actions';
-import { cityRequest } from '../actions/cityRequest';
+import { handleAction, handleActions } from 'redux-actions';
+import {
+  fetchCityRequest,
+  fetchCitySuccess,
+  fetchCityFailure
+} from '../actions/cityRequest';
+export const isFetching = handleActions(
+  {
+    [fetchCityRequest]: () => true,
+    [fetchCitySuccess]: () => false,
+    [fetchCityFailure]: () => false
+  },
+  false
+);
+export const networkError = handleActions(
+  {
+    [fetchCitySuccess]: () => false,
+    [fetchCityFailure]: () => true
+  },
+  false
+);
 export const query = handleAction(
-  cityRequest,
+  fetchCityRequest,
   (state, action) => action.payload,
   ''
 );
 
-//селектор citiesFilter фильрует города из списка
-export const citiesFilter = state => {
-  let tipsList = [];
-  let { cities, query } = state;
+export const cities = handleAction(
+  fetchCitySuccess,
+  (state, action) => action.payload,
+  []
+);
 
-  for (let city of cities) {
-    if (
-      query !== '' &&
-      city.City &&
-      city.City.toLowerCase().indexOf(query.toLowerCase()) === 0
-    ) {
-      tipsList.push({ Id: city.Id, City: city.City });
-    }
-  }
-
-  return {
-    cities: tipsList.slice(0, 5),
-    citiesAmount: tipsList.length
-  };
+// селектор filteredCities отдает
+export const filteredCities = state => {
+  const slicedCities = state.cities ? state.cities.slice(0, 5) : [];
+  const citiesAmount = state.cities.length;
+  return { cities: slicedCities, citiesAmount: citiesAmount };
 };

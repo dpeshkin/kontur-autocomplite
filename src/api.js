@@ -1,7 +1,10 @@
 // имитация работы с сетью
 import cities from './kladr.json';
 
-const filterCity = (query, cities) => {
+const delay = 250;
+const networkError = false;
+
+export const filterCity = query => {
   let filteredCities = [];
   for (let city of cities) {
     if (
@@ -15,10 +18,10 @@ const filterCity = (query, cities) => {
   return filteredCities;
 };
 
-export const fetchRequest = (query, delay) => {
-  let request = new Promise(resolve => {
-    resolve(query);
-    reject(Error('NetworkProblem'));
-  });
-  request.then;
-};
+// export const fetchRequest = (query, delay) => {
+//   let request = new Promise(resolve => {
+//     resolve(query);
+//     reject(Error('NetworkProblem'));
+//   });
+//   request.then;
+// };

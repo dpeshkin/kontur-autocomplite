@@ -1,15 +1,21 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './reducers';
-import citiesBase from './kladr.json';
-// const initialState = { cities: citiesBase.map(el => el.City) };
-const initialState = { cities: citiesBase }; // это временное решение
-//по уму надо написать миддл с иммитации загрузки списка городов
+import rootSaga from './sagas';
+import createSagaMiddleware from 'redux-saga';
 
-export default () => {
+const sagaMiddleware = createSagaMiddleware();
+
+export default initialState => {
   const store = createStore(
     rootReducer,
     initialState,
-    window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+    compose(
+      applyMiddleware(sagaMiddleware),
+      window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+    )
   );
+
+  sagaMiddleware.run(rootSaga);
+
   return store;
 };
