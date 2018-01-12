@@ -31,7 +31,7 @@ export const cities = handleAction(
   []
 );
 
-// селектор filteredCities отдает
+// селектор filteredCities отдает обрезаный до 5 массив подсказок, и общую длинну массива
 export const filteredCities = state => {
   const slicedCities = state.cities ? state.cities.slice(0, 5) : [];
   const citiesAmount = state.cities.length;

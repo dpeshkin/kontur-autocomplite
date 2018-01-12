@@ -11,14 +11,17 @@ export class Main extends Component {
     cities: [],
     citiesAmount: 0,
     inputFocused: false,
-    inputValid: true
+    inputValid: true,
+    isFetching: false
   };
 
   componentWillReceiveProps(nextProps) {
-    const { cities, citiesAmount } = nextProps;
+    const { cities, citiesAmount } = nextProps.cities;
+    const { isFetching } = nextProps;
     this.setState({
       cities: cities,
-      citiesAmount: citiesAmount
+      citiesAmount: citiesAmount,
+      isFetching: isFetching
     });
   }
 
@@ -50,7 +53,7 @@ export class Main extends Component {
     // срабатывает раньше чем обработка клика на пункте из списка подсказок
     setTimeout(() => {
       this.setState({ inputFocused: false });
-      this.validate();
+      // this.validate();
     }, 100);
   };
 
@@ -100,7 +103,10 @@ export class Main extends Component {
   }
 }
 
-const mapStateToProps = state => filteredCities(state);
+const mapStateToProps = state => ({
+  cities: filteredCities(state),
+  isFetching: state.isFetching
+});
 
 const mapDispatchToProps = {
   fetchCityRequest

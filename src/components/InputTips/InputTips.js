@@ -15,7 +15,7 @@ const handleHover = e => {
 };
 
 export const InputTips = props => {
-  const { query, cities, citiesAmount } = props.tips;
+  const { query, cities, citiesAmount, isFetching } = props.tips;
   return (
     <div className="tips">
       {!!citiesAmount && (
@@ -42,7 +42,11 @@ export const InputTips = props => {
         </div>
       )}
       {query &&
-        !citiesAmount && <div className="tips__notfound">Нет совпадений</div>}
+        !citiesAmount &&
+        !isFetching && (
+          <div className="tips__notfound">Нет совпадений{isFetching}</div>
+        )}
+      {isFetching && <div>... Загрузка</div>}
     </div>
   );
 };
