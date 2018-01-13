@@ -5,6 +5,8 @@ import { fetchCityRequest } from '../../actions/cityRequest';
 import { filteredCities } from '../../reducers/query';
 import './Main.css';
 
+let loaderTimer; // в этой переменной хрянится таймер для лоадера, необходимо для п.20
+
 export class Main extends Component {
   state = {
     query: '',
@@ -12,17 +14,21 @@ export class Main extends Component {
     citiesAmount: 0,
     inputFocused: false,
     inputValid: true,
-    isFetching: false
+    isFetching: false,
+    networkError: false
   };
 
   componentWillReceiveProps(nextProps) {
     const { cities, citiesAmount } = nextProps.cities;
-    const { isFetching } = nextProps;
-    this.setState({
-      cities: cities,
-      citiesAmount: citiesAmount,
-      isFetching: isFetching
-    });
+    clearTimeout(loaderTimer);
+    loaderTimer = setTimeout(() => {
+      this.setState({
+        isFetching: nextProps.isFetching,
+        cities: cities,
+        citiesAmount: citiesAmount,
+        networkError: nextProps.networkError
+      });
+    }, 500);
   }
 
   handleChange = e => {
@@ -51,19 +57,27 @@ export class Main extends Component {
   handleBlur = () => {
     // Таймаут необходим, т.к. обработка потери фокуса на инпуте
     // срабатывает раньше чем обработка клика на пункте из списка подсказок
-    setTimeout(() => {
-      this.setState({ inputFocused: false });
-      // this.validate();
-    }, 100);
+    if (!this.state.networkError)
+      setTimeout(() => {
+        this.setState({ inputFocused: false });
+        this.validate();
+      }, 100);
   };
 
   handleFocus = () => {
     this.setState({ inputFocused: true, inputValid: true });
   };
 
+  //обработчик клика по подсказке, его прокинем в InputTips
   handleClickOnTip = e => {
     const value = e.target.getAttribute('data-value');
     if (value) this.setState({ query: value });
+  };
+
+  //обработчик кнопки обновить(п.21), его прокинем в InputTips
+  handleReloadQuery = e => {
+    e.preventDefault();
+    this.props.fetchCityRequest(this.state.query.trim());
   };
 
   render() {
@@ -95,6 +109,7 @@ export class Main extends Component {
               <InputTips
                 tips={this.state}
                 handleClick={this.handleClickOnTip}
+                reloadQuery={this.handleReloadQuery}
               />
             )}
         </form>
@@ -105,7 +120,8 @@ export class Main extends Component {
 
 const mapStateToProps = state => ({
   cities: filteredCities(state),
-  isFetching: state.isFetching
+  isFetching: state.isFetching,
+  networkError: state.networkError
 });
 
 const mapDispatchToProps = {

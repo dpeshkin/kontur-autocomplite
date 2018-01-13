@@ -15,7 +15,8 @@ export const isFetching = handleActions(
 export const networkError = handleActions(
   {
     [fetchCitySuccess]: () => false,
-    [fetchCityFailure]: () => true
+    [fetchCityFailure]: () => true,
+    [fetchCityRequest]: () => false
   },
   false
 );

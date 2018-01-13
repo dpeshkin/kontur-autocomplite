@@ -1,11 +1,10 @@
-// имитация работы с сетью
-
 import cities from './kladr.json';
 
-//ПАРАМЕТР delay задает время задержки ответа с сервера, необходим для проверки п.20
-const delay = 2000;
+//delay задает время задержки ответа с сервера, измените значение чтобы проверить соответсвие п.20
+const delay = 100;
 
-const networkError = false;
+//networkError имитирует ошибку сервера, задайте значение true, чтобы проверить соответствие п.21
+const networkError = true;
 
 export const filterCity = query => {
   let filteredCities = [];
@@ -22,11 +21,12 @@ export const filterCity = query => {
 };
 
 export const fetchRequest = query => {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(query);
     }, delay);
   }).then(query => {
+    if (networkError) throw new Error();
     return filterCity(query);
   });
 };
