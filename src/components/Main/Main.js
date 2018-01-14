@@ -15,8 +15,10 @@ export class Main extends Component {
     inputFocused: false,
     inputValid: true,
     isFetching: false,
-    networkError: false
+    networkError: false,
+    tipsQuery: ''
   };
+  //tipsQuery нужен для корректной работы InputTips
 
   componentWillReceiveProps(nextProps) {
     const { cities, citiesAmount } = nextProps.cities;
@@ -27,7 +29,8 @@ export class Main extends Component {
         isFetching: isFetching,
         cities: cities,
         citiesAmount: citiesAmount,
-        networkError: networkError
+        networkError: networkError,
+        tipsQuery: this.state.query
       });
     }, 500);
   }
@@ -82,7 +85,7 @@ export class Main extends Component {
   };
 
   render() {
-    let { query, inputFocused, inputValid } = this.state;
+    let { query, inputFocused, inputValid, tipsQuery } = this.state;
     return (
       <section className="main">
         <form name="searchForm" action="#" className="form">
@@ -92,8 +95,8 @@ export class Main extends Component {
           <input
             value={query}
             type="text"
-            name="cityInput"
-            id="cityInput"
+            name="city-input"
+            id="city-input"
             className={
               inputValid ? 'form__input' : 'form__input form__input_error'
             }
@@ -105,7 +108,7 @@ export class Main extends Component {
           {!inputValid && (
             <div className="validation-error">Выберите значение из списка</div>
           )}
-          {query &&
+          {tipsQuery &&
             inputFocused && (
               <InputTips
                 tips={this.state}

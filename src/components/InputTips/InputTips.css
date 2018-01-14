@@ -16,20 +16,6 @@
   display: flex;
   align-items: center;
 }
-
-.tips__loader::before {
-  content: '';
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  vertical-align: middle;
-  margin-right: 3px;
-  background: url('../../icons/preloader-icon.svg') center;
-  background-size: cover;
-  animation: rotation infinite 2s linear;
-}
-
 .tips__list {
   list-style: none;
   padding: 0;
@@ -68,13 +54,4 @@
 
 .tips__specify-message p {
   margin: 0;
-}
-
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

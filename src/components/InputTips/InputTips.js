@@ -1,5 +1,6 @@
 import React from 'react';
 import './InputTips.css';
+import Preloader from '../Preloader';
 
 const handleHover = e => {
   if (e.target.tagName === 'LI') {
@@ -9,7 +10,13 @@ const handleHover = e => {
 };
 
 export const InputTips = props => {
-  const { query, cities, citiesAmount, isFetching, networkError } = props.tips;
+  const {
+    tipsQuery,
+    cities,
+    citiesAmount,
+    isFetching,
+    networkError
+  } = props.tips;
   return (
     <div className="tips">
       {!!citiesAmount && (
@@ -35,11 +42,15 @@ export const InputTips = props => {
           <p>Уточните запрос чтобы увидеть остальные</p>
         </div>
       )}
-      {query &&
+      {tipsQuery &&
         !citiesAmount &&
         !isFetching &&
         !networkError && <div className="tips__notfound">Нет совпадений</div>}
-      {isFetching && <div className="tips__loader">Загрузка</div>}
+      {isFetching && (
+        <div className="tips__loader">
+          <Preloader />Загрузка
+        </div>
+      )}
       {networkError && (
         <div>
           <div className="tips__error">
