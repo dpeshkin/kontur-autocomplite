@@ -20,13 +20,14 @@ export class Main extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { cities, citiesAmount } = nextProps.cities;
+    const { isFetching, networkError } = nextProps;
     clearTimeout(loaderTimer);
     loaderTimer = setTimeout(() => {
       this.setState({
-        isFetching: nextProps.isFetching,
+        isFetching: isFetching,
         cities: cities,
         citiesAmount: citiesAmount,
-        networkError: nextProps.networkError
+        networkError: networkError
       });
     }, 500);
   }

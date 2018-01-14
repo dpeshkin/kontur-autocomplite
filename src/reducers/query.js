@@ -1,9 +1,11 @@
-import { handleAction, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
+import { combineReducers } from 'redux';
 import {
   fetchCityRequest,
   fetchCitySuccess,
   fetchCityFailure
 } from '../actions/cityRequest';
+
 export const isFetching = handleActions(
   {
     [fetchCityRequest]: () => true,
@@ -12,25 +14,30 @@ export const isFetching = handleActions(
   },
   false
 );
+
 export const networkError = handleActions(
   {
-    [fetchCitySuccess]: () => false,
     [fetchCityFailure]: () => true,
     [fetchCityRequest]: () => false
   },
   false
 );
-export const query = handleAction(
-  fetchCityRequest,
-  (state, action) => action.payload,
+
+export const query = handleActions(
+  {
+    [fetchCityRequest]: (state, action) => action.payload
+  },
   ''
 );
 
-export const cities = handleAction(
-  fetchCitySuccess,
-  (state, action) => action.payload,
+export const cities = handleActions(
+  {
+    [fetchCitySuccess]: (state, action) => action.payload
+  },
   []
 );
+
+export default combineReducers({ isFetching, networkError, query, cities });
 
 // селектор filteredCities отдает обрезаный до 5 массив подсказок, и общую длинну массива
 export const filteredCities = state => {

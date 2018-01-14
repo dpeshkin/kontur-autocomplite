@@ -38,9 +38,7 @@ export const InputTips = props => {
       {query &&
         !citiesAmount &&
         !isFetching &&
-        !networkError && (
-          <div className="tips__notfound">Нет совпадений{isFetching}</div>
-        )}
+        !networkError && <div className="tips__notfound">Нет совпадений</div>}
       {isFetching && <div className="tips__loader">Загрузка</div>}
       {networkError && (
         <div>
