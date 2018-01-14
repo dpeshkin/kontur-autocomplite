@@ -1,12 +1,10 @@
-import cities from './kladr.json';
-
-//delay задает время задержки ответа с сервера, измените значение чтобы проверить соответсвие п.20
-const delay = 10000000;
+//delay задает время задержки ответа с сервера, задайте значение >500 чтобы проверить соответсвие п.20
+const delay = 100;
 
 //networkError имитирует ошибку сервера, задайте значение true, чтобы проверить соответствие п.21
 const networkError = false;
 
-export const filterCity = query => {
+const filterCity = (query, cities) => {
   let filteredCities = [];
   for (let city of cities) {
     if (
@@ -22,11 +20,16 @@ export const filterCity = query => {
 
 export const fetchRequest = query => {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(query);
-    }, delay);
-  }).then(query => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', './kladr.json', true);
+    xhr.onload = () => {
+      setTimeout(() => {
+        resolve(JSON.parse(xhr.response));
+      }, delay);
+    };
+    xhr.send();
+  }).then(result => {
     if (networkError) throw new Error();
-    return filterCity(query);
+    return filterCity(query, result);
   });
 };
