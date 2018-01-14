@@ -14,7 +14,7 @@ export class Main extends Component {
     citiesAmount: 0,
     inputFocused: false,
     inputValid: true,
-    isFetching: false,
+    isFetching: true,
     networkError: false
   };
 
@@ -54,15 +54,15 @@ export class Main extends Component {
     });
   };
 
-  handleBlur = () => {
-    // Таймаут необходим, т.к. обработка потери фокуса на инпуте
-    // срабатывает раньше чем обработка клика на пункте из списка подсказок
-    if (!this.state.networkError)
-      setTimeout(() => {
-        this.setState({ inputFocused: false });
-        this.validate();
-      }, 100);
-  };
+  // handleBlur = () => {
+  //   // Таймаут необходим, т.к. обработка потери фокуса на инпуте
+  //   // срабатывает раньше чем обработка клика на пункте из списка подсказок
+  //   if (!this.state.networkError)
+  //     setTimeout(() => {
+  //       this.setState({ inputFocused: false });
+  //       this.validate();
+  //     }, 100);
+  // };
 
   handleFocus = () => {
     this.setState({ inputFocused: true, inputValid: true });

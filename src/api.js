@@ -1,10 +1,10 @@
 import cities from './kladr.json';
 
 //delay задает время задержки ответа с сервера, измените значение чтобы проверить соответсвие п.20
-const delay = 100;
+const delay = 10000000;
 
 //networkError имитирует ошибку сервера, задайте значение true, чтобы проверить соответствие п.21
-const networkError = true;
+const networkError = false;
 
 export const filterCity = query => {
   let filteredCities = [];
