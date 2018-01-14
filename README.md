@@ -1,5 +1,7 @@
 # Тестовое задание
 
+[![Build Status](https://travis-ci.org/ekb196/kontur-autocomplite.svg?branch=master)](https://travis-ci.org/ekb196/kontur-autocomplite)
+
 ## Установка и запуска проекта
 
 ```bash
